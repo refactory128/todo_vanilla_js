@@ -1,0 +1,11 @@
+
+Basic Setup  https://webpack.js.org/guides/getting-started/
+npm init -y
+npm install webpack webpack-cli --save-dev
+
+Assets https://webpack.js.org/guides/asset-management/
+npm install --save-dev style-loader css-loader
+
+
+Running webpack
+npx webpack --watch
