@@ -6,12 +6,39 @@
     #BBCDe5 Light Steel Blue
 */
 
-
-
 body{
     margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    
 
 }
+
+button {
+    background-color: #222222; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 4px;
+  }
+
+label{
+    font-size: 20px;
+
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-size: 20px;
+    border-radius: 4px;
+  }
 
 .nav{
     background-color: #1c5d99 ;
@@ -25,3 +52,35 @@ body{
     width: 50px;
     fill:white;
 }
+
+.modal {
+    
+    position: relative;
+    background-color: #BBCDe5;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    height: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s
+  }
+  
+  /* Add Animation */
+  @keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+  }
+
+  .element {
+    
+
+    background-color: #639FAB;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 100%;
+    
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  }
