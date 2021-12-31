@@ -24,6 +24,7 @@ button {
     display: inline-block;
     font-size: 20px;
     border-radius: 4px;
+    margin:5px;
   }
 
 label{
@@ -74,7 +75,10 @@ input[type=text] {
   }
 
   .element {
-
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
@@ -86,3 +90,9 @@ input[type=text] {
   .highlight {
     background-color: #639FAB;
   }
+
+  .element-controls{
+    margin:30px;
+    }
+
+  

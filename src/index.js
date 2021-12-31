@@ -96,11 +96,12 @@ project.prototype.getParent = function(){
 class task {
     constructor (
         title = '',
+        parent = null,
         description = '',
-        priority = 0,
         dueDate = '2021-01-01',
         complete = false,
-        parent = null,
+        priority = 0,
+
     ) {
         this.title = title;
         this.description = description;
@@ -126,9 +127,9 @@ task.prototype.getFillableFields = function() {
 task.prototype.update = function (userInput){
     this.title = userInput.title;
     this.description = userInput.description;
-    this.priority = userInput.priority;
     this.dueDate = userInput.dueDate;
     this.complete = userInput.complete;
+    this.priority = userInput.priority;
 }
 
 task.prototype.getSubElements = function() {
@@ -138,9 +139,9 @@ task.prototype.getSubElements = function() {
 task.prototype.getData = function() {
     return {title: this.title,
             description: this.description,
-            priority: this.priority,
             dueDate: this.dueDate,
-            complete: this.complete };
+            complete: this.complete,
+            priority: this.priority, };
 }
 
 task.prototype.getParent = function(){
@@ -166,9 +167,6 @@ function clearPage() {
     }
 
 }
-
-
-
 
 // Generate navigation bar
 function navBar(callback) {
@@ -228,17 +226,27 @@ function generateModal(fields, element, callback) {
 //element to edit or delete for callback
 //highlight -- render in primary color or secondary color
 
-function renderContent(fields, deleteCallback, editCallback, element, highlight = false) {  
+function renderContent(fields, deleteCallback, editCallback, element, highlight = false, addCallback = null) {  
     const div = document.createElement("div");
     div.classList.add('element');
     if (highlight) {  div.classList.add('highlight')};
 
     let divHtml =""
+    let i = 0;
     for (const field in fields){
-        console.log(field);
-        divHtml = divHtml + `<p>${fields[field]}<p> </br>`;
+        if (i<=0){
+            divHtml = divHtml + `<h1>${fields[field]}</h1> </br>`;
+
+        } else {
+            console.log(field);
+            divHtml = divHtml + `<p>${fields[field]}<p>`;
+        }
+        i++;
     }
     div.innerHTML = divHtml 
+
+    const controls = document.createElement("div");
+    controls.classList.add('element-controls');
     
     const button = document.createElement("button");
     button.innerText = "Delete"
@@ -246,18 +254,29 @@ function renderContent(fields, deleteCallback, editCallback, element, highlight 
         //todo add remove element callback
         deleteCallback(element);
     });
-    div.appendChild(button);
+    controls.appendChild(button);
 
     const button2 = document.createElement("button");
     button2.innerText = "Edit"
     button2.addEventListener("click", e =>{
         //todo add remove element callback
-        editCallback();
+        editCallback(element);
     });
-    div.appendChild(button2);
+    controls.appendChild(button2);
+
+    if (addCallback !== null){
+        const button3 = document.createElement("button");
+        button3.innerText = "Add"
+        button3.addEventListener("click", e =>{
+            //todo add remove element callback
+            addCallback(element);
+        });
+        controls.appendChild(button3);
+    }
 
     let body = document.querySelector("body");
     body.appendChild(div);
+    div.appendChild(controls);
 }
 
 
@@ -270,6 +289,12 @@ function renderContent(fields, deleteCallback, editCallback, element, highlight 
 function createNewProject()  {
     let tempProject = new project('New Project',user1);
     generateModal(tempProject.getFillableFields(), tempProject, updateElement);
+
+}
+
+function createNewTask(parentProject)  {
+    let tempTask = new task('New Task',parentProject);
+    generateModal(tempTask.getFillableFields(), tempTask, updateElement);
 
 }
 
@@ -296,6 +321,10 @@ function removeElement(element)
     renderPage();
 }
 
+function getUpdateInfo(element) {
+    generateModal(element.getFillableFields(), element, updateElement);
+
+}
 
 function renderPage()
 {
@@ -303,16 +332,27 @@ function renderPage()
     navBar(createNewProject);  //generate nav bar and call back to createNewProject when plus is clicked
     
     //let user = user1;
-    let elements = user1.getSubElements();
+    const projectElements = user1.getSubElements();
     
     //console.log(user);
     
-    for(const element of elements) {
-        renderContent(element.getData(),
-                        removeElement,
-                        element.update,
-                        element,
-                      true);
+    for(const pElement of projectElements) {
+        renderContent(
+            pElement.getData(),
+            removeElement,
+            getUpdateInfo,
+            pElement,
+            true,
+            createNewTask);
+
+        let taskElements = pElement.getSubElements();               
+        for(const tElement of taskElements){
+            renderContent(
+                tElement.getData(),
+                removeElement,
+                getUpdateInfo,
+                tElement);
+        }
         //user1.removeSubElement(element);
         console.log(user1);
     }
