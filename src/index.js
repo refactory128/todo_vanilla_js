@@ -116,16 +116,9 @@ function open(){
 let user1 = new user("myuser");
 
 /*
-
-let project1 = new project('project1',user1);
-
-
-let task2 = new task("use local storage",project1);
-let task21 = new task("separate code into modules",project1);
-
 let bonus = new project('bonus',user1);
-let task1 = new task("make mobile friendly",bonus);
 let task25 = new task("make modal more user friendly",bonus);
+let task26 = new task("move details to another sub element",bonus);
 let task3 = new task("drag and drop priority",bonus);
 let task4 = new task("connect to database",bonus);
 */
