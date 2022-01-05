@@ -92,8 +92,14 @@ input[type=text] {
   }
 
   .element-controls{
-    margin: 0px 60px;
+      margin: 0px 5px;
     }
+
+  .element-controls > img{
+      width: 50px;
+      fill:white;
+      margin: 0px 5px;
+  }
 
   
 
@@ -107,6 +113,7 @@ input[type=text] {
   button{
     padding: 8px 16px;
     font-size: 10px;
+
   }
 
 

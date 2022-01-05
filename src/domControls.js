@@ -3,7 +3,9 @@
 //  DOM ELEMENTS
 //
 /////////////////////////////////////////
-import plusIconSrc from './img/add_circle_black_24dp.svg';
+import addIconSrc from './img/add_circle_black_24dp.svg';
+import deleteIconSrc from './img/delete_forever_black_24dp.svg';
+import editIconSrc from './img/edit_black_24dp.svg';
 
 // remove all elements from page
 function clearPage() {
@@ -21,16 +23,18 @@ function navBar(callback) {
     nav.classList.add('nav');
 
 
-    const plusIcon = new Image();
-    plusIcon.src = plusIconSrc;
-    nav.appendChild(plusIcon);
+    const addIcon = new Image();
+    addIcon.src = addIconSrc;
+    nav.appendChild(addIcon);
+
+    addIcon.addEventListener("click", e =>{
+        callback();
+    });
 
     let body = document.querySelector("body");
     body.appendChild(nav);
 
-    plusIcon.addEventListener("click", e =>{
-        callback();
-    });
+
 
 }
 
@@ -95,24 +99,9 @@ function renderContent(fields, deleteCallback, editCallback, element, highlight 
 
     const controls = document.createElement("div");
     controls.classList.add('element-controls');
-    
-    const button = document.createElement("button");
-    button.innerText = "Delete"
-    button.addEventListener("click", e =>{
-        //todo add remove element callback
-        deleteCallback(element);
-    });
-    controls.appendChild(button);
-
-    const button2 = document.createElement("button");
-    button2.innerText = "Edit"
-    button2.addEventListener("click", e =>{
-        //todo add remove element callback
-        editCallback(element);
-    });
-    controls.appendChild(button2);
 
     if (addCallback !== null){
+        /*
         const button3 = document.createElement("button");
         button3.innerText = "Add"
         button3.addEventListener("click", e =>{
@@ -120,7 +109,56 @@ function renderContent(fields, deleteCallback, editCallback, element, highlight 
             addCallback(element);
         });
         controls.appendChild(button3);
+        */
+
+        const addIcon = new Image();
+        addIcon.src = addIconSrc;
+        controls.appendChild(addIcon);
+    
+        addIcon.addEventListener("click", e =>{
+            addCallback(element);
+        });
+
     }
+
+    //////////////////////////////////////////////////// Button version delete
+    /*
+    const button = document.createElement("button");
+    button.innerText = "Delete"
+    button.addEventListener("click", e =>{
+        //todo add remove element callback
+        deleteCallback(element);
+    });
+    controls.appendChild(button);
+    */
+
+    const editIcon = new Image();
+    editIcon.src = editIconSrc;
+    controls.appendChild(editIcon);
+
+    editIcon.addEventListener("click", e =>{
+        editCallback(element);
+    });
+
+
+    //////////////////////////////////////////////////Icon version delete
+    const deleteIcon = new Image();
+    deleteIcon.src = deleteIconSrc;
+    controls.appendChild(deleteIcon);
+
+    deleteIcon.addEventListener("click", e =>{
+        deleteCallback(element);
+    });
+
+    /*
+    const button2 = document.createElement("button");
+    button2.innerText = "Edit"
+    button2.addEventListener("click", e =>{
+        //todo add remove element callback
+        editCallback(element);
+    });
+    controls.appendChild(button2);
+    */
 
     let body = document.querySelector("body");
     body.appendChild(div);
