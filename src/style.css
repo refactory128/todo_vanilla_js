@@ -17,10 +17,11 @@ button {
     border: none;
     color: white;
     padding: 15px 32px;
+    font-size: 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 20px;
+
     border-radius: 4px;
     margin:5px;
   }
@@ -78,10 +79,10 @@ input[type=text] {
     gap: 10px;
     justify-content: space-between;
     align-items: center;
-    margin: auto;
-    padding: 0px 30px;
+    margin: 0px;
+    padding: 0px 0px 0px 20px;
     border: 1px solid #888;
-    width: 100%;
+  
     
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   }
@@ -100,6 +101,11 @@ input[type=text] {
 
 @media screen and (max-width: 600px) {
   .element {
+    font-size: 10px;
+  }
+
+  button{
+    padding: 8px 16px;
     font-size: 10px;
   }
 
