@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "todo app in vanilla JavaScript",
   "main": "webpack.config.js",
-  "dependencies": {},
+  "dependencies": {
+    "flatted": "^3.2.4"
+  },
   "devDependencies": {
     "css-loader": "^6.5.1",
     "style-loader": "^3.3.1",

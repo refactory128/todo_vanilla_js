@@ -9,3 +9,7 @@ npm install --save-dev style-loader css-loader
 
 Running webpack
 npx webpack --watch
+
+
+deploying to github
+git subtree push --prefix dist origin gh-pages

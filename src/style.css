@@ -75,12 +75,13 @@ input[type=text] {
   }
 
   .element {
+   
     display: flex;
     gap: 10px;
     justify-content: space-between;
     align-items: center;
     margin: auto;
-    padding: 20px;
+    padding: 0px 30px;
     border: 1px solid #888;
     width: 100%;
     
@@ -92,7 +93,7 @@ input[type=text] {
   }
 
   .element-controls{
-    margin:30px;
+    margin: 0px 60px;
     }
 
   

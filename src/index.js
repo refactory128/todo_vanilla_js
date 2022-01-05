@@ -2,6 +2,7 @@
 
 import './style.css';
 import plusIconSrc from './img/add_circle_black_24dp.svg';
+import {parse, stringify, toJSON, fromJSON} from 'flatted';
 
 
 
@@ -26,7 +27,7 @@ user.prototype.addSubElement = function(subElement) {
 }
 
 user.prototype.removeSubElement = function(subElement) {
-    console.log(this.subElements);
+    //console.log(this.subElements);
     this.subElements.splice(this.subElements.indexOf(subElement),1);
 }
 
@@ -75,8 +76,8 @@ project.prototype.update = function (userInput){
 
 project.prototype.delete = function (){
     const parent = this.getParent();
-    console.log("parent = " );
-    console.log(parent);
+    //console.log("parent = " );
+    //console.log(parent);
     parent.removeSubElement(this);
 }
 
@@ -90,6 +91,10 @@ project.prototype.getData = function() {
 
 project.prototype.getParent = function(){
     return this.parent;
+}
+
+project.prototype.setParent = function(parent){
+    return this.parent = parent;
 }
 
 //////////////////////////////////////////
@@ -152,6 +157,10 @@ task.prototype.delete = function (){
     this.getParent().removeSubElement(this);
 }
 
+task.prototype.setParent = function(parent){
+    return this.parent = parent;
+}
+
 //////////////////////////////////////////
 //
 //  DOM ELEMENTS
@@ -199,7 +208,7 @@ function generateModal(fields, element, callback) {
 
     let modalHtml =""
     for (const field in fields){
-        console.log(field);
+        //console.log(field);
         modalHtml = modalHtml + `<label>${fields[field]}: <input id="${field}" type="text"></label> </br>`;
     }
     modal.innerHTML = modalHtml 
@@ -211,7 +220,7 @@ function generateModal(fields, element, callback) {
         for (const field in fields){
             userInput[field] = document.getElementById(field).value;
         }
-        console.log(userInput);
+        //console.log(userInput);
         callback(element, userInput);
         modal.remove();
     });
@@ -238,7 +247,7 @@ function renderContent(fields, deleteCallback, editCallback, element, highlight 
             divHtml = divHtml + `<h1>${fields[field]}</h1> </br>`;
 
         } else {
-            console.log(field);
+            //console.log(field);
             divHtml = divHtml + `<p>${fields[field]}<p>`;
         }
         i++;
@@ -302,7 +311,7 @@ function updateElement(element,userInput)
 {
 
     element.update(userInput);
-    console.log(element);
+    //console.log(element);
     renderPage();
     //user1.Add(tempProject);
 
@@ -312,8 +321,8 @@ function updateElement(element,userInput)
 
 function removeElement(element)
 {
-    console.log("remove element");
-    console.log(element);
+    //console.log("remove element");
+    //console.log(element);
 
 
     
@@ -328,10 +337,13 @@ function getUpdateInfo(element) {
 
 function renderPage()
 {
+    save(user1);
     clearPage();
     navBar(createNewProject);  //generate nav bar and call back to createNewProject when plus is clicked
     
     //let user = user1;
+    //save(user1);
+
     const projectElements = user1.getSubElements();
     
     //console.log(user);
@@ -354,16 +366,76 @@ function renderPage()
                 tElement);
         }
         //user1.removeSubElement(element);
-        console.log(user1);
+        //console.log(user1);
     }
     
 }
+///////////////////////////////////////
+//
+// Local Storage
+//
+//////////////////////////////////////
+
+function save(data){
+    localStorage.setItem('todoListData', stringify(data));
+}
+
+function open(){
+    if (localStorage.getItem('todoListData')){
+        const data = parse(localStorage.getItem('todoListData'));
+        console.log(data);
+        const tempUser = Object.assign(new user, data);
+
+        tempUser.getSubElements().forEach((subElement, index, array) => {
+
+            const tempProject = Object.assign(new project, subElement);
+            array[index] = tempProject
+            tempProject.setParent(tempUser);
+            //console.log(tempProject);
+            tempProject.getSubElements().forEach((subElement, index, array) => {
+                const tempTask = Object.assign(new task, subElement);
+                array[index] = tempTask;
+                tempTask.setParent(tempProject);
+            });
+        });
+    }
+
+    console.log(tempUser); 
+    return tempUser;
+
+}
+
 
 /////////////////////////////////////////
 //Main program starts here
 
-const user1 = new user("user1");
+let user1 = new user("myuser");
+
+/*
+
 let project1 = new project('project1',user1);
+
+
+let task2 = new task("use local storage",project1);
+let task21 = new task("separate code into modules",project1);
+
+let bonus = new project('bonus',user1);
+let task1 = new task("make mobile friendly",bonus);
+let task25 = new task("make modal more user friendly",bonus);
+let task3 = new task("drag and drop priority",bonus);
+let task4 = new task("connect to database",bonus);
+
+localStorage.clear();
+save(user1);
+*/
+
+
+const loadedUser = open();
+
+if (loadedUser) {
+    user1 = loadedUser;
+}
+
 
 renderPage();
 //create nav bar for user 1
