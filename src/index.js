@@ -134,8 +134,6 @@ const loadedUser = open();
 if (loadedUser) {
     user1 = loadedUser;
 }
-
-
 renderPage();
 //create nav bar for user 1
 
