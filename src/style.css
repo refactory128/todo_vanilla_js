@@ -9,9 +9,7 @@
 body{
     margin: 0px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
-    
-
+    font-size: 2vw;
 }
 
 button {
@@ -97,3 +95,14 @@ input[type=text] {
     }
 
   
+
+
+
+@media screen and (max-width: 600px) {
+  .element {
+    font-size: 10px;
+  }
+
+
+
+}
